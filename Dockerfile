@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     python3-dev \
     pkg-config \
@@ -18,16 +18,17 @@ WORKDIR /app
 # Copy project files
 COPY . /app/
 
-# Set Python path
-ENV PYTHONPATH="/app:$PYTHONPATH"
-
-# Create and activate virtual environment
+# Create and activate virtual environment, then install dependencies
 RUN python -m venv /opt/venv && \
     . /opt/venv/bin/activate && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt && \
+    gunicorn --version
 
-# Expose Django default port
+# Add virtual environment to PATH
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Expose the default Django port
 EXPOSE 8000
 
 # Run Gunicorn
