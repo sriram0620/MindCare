@@ -1,7 +1,6 @@
-# Use Python 3.10 or higher
 FROM python:3.10-slim
 
-# Install system dependencies including pkg-config and MariaDB libraries
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     python3-dev \
     pkg-config \
@@ -19,17 +18,17 @@ WORKDIR /app
 # Copy project files
 COPY . /app/
 
-# Create and activate virtual environment, then install dependencies
+# Set Python path
+ENV PYTHONPATH="/app:$PYTHONPATH"
+
+# Create and activate virtual environment
 RUN python -m venv /opt/venv && \
     . /opt/venv/bin/activate && \
     pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Set environment variables
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Expose the default Django port
+# Expose Django default port
 EXPOSE 8000
 
-# Command to run the application
-CMD ["gunicorn", "mindcare.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Run Gunicorn
+CMD ["gunicorn", "mentalhealth.wsgi:application", "--bind", "0.0.0.0:8000"]
