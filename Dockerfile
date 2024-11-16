@@ -1,8 +1,10 @@
-FROM python:3.9-slim
+# Use Python 3.10 or higher
+FROM python:3.10-slim
 
-# Install system dependencies for Python and MySQL
+# Install system dependencies including pkg-config and MariaDB libraries
 RUN apt-get update && apt-get install -y \
     python3-dev \
+    pkg-config \
     libmariadb-dev-compat \
     libmariadb-dev \
     build-essential \
