@@ -73,7 +73,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mentalhealth.wsgi.application'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://0989-175-101-105-133.ngrok-free.app',  # Use HTTPS
+    "https://mindcare-production.up.railway.app/"
 ]
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
