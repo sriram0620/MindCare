@@ -30,8 +30,6 @@ db.sqlite3
 /media/
 *.media/
 
-# Static files
-/static/
 
 # Local environment settings
 /local_settings.py
